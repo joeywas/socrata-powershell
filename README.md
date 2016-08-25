@@ -1,2 +1,2 @@
 # socrata-powershell
-PowerShell to work with the Socrata Open Data API
+PowerShell examples for working with the [Socrata Open Data API](https://dev.socrata.com/docs/endpoints.html).
