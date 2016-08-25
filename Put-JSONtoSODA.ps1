@@ -10,7 +10,8 @@ $url = "<redacted>"
 $username = "<redacted>"
 $password = "<redacted>"
 
-# Populate $json with an appropriate payload per https://dev.socrata.com/publishers/upsert.html
+# Populate $json with a payload appropriate for the dataset being updated
+# See https://dev.socrata.com/publishers/getting-started.html for more info
 # The PowerShell ConvertTo-JSON cmdlet can be used to convert data to JSON
 $json = "[{ }]"
 
@@ -25,7 +26,11 @@ $headers.Add("Authorization",("Basic {0}" -f $base64AuthInfo))
 $headers.Add("Content-Length",$json.Length)
 $headers.Add("X-App-Token",$apptoken)
 
-$results = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $json -ContentType "application/json"
+# Put is a full replace of the dataset. https://dev.socrata.com/publishers/replace.html
+# Post is an upsert https://dev.socrata.com/publishers/upsert.html
+$method = "put"
+
+$results = Invoke-RestMethod -Uri $url -Method $method -Headers $headers -Body $json -ContentType "application/json"
 
 # Results should contain how many inserts, updates, or deletes occurred
 write-host $results
